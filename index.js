@@ -7,7 +7,6 @@ function getComputerChoice() {
 
 // Function where the decision is made by comparing playerSelection and computerSelection
 function playRound(playerSelection, computerSelection) {
-  console.log('Computer Choice : ', computerSelection)
   if (playerSelection === computerSelection) return 'draww'
   else if (playerSelection === 'rock' && computerSelection === 'scissor')
     return 'player'
@@ -25,27 +24,46 @@ function playRound(playerSelection, computerSelection) {
 
 // Game Play Function
 function game() {
+  // Variable Initialization
   let playerPoints = 0,
     computerPoints = 0
+  // Game Loop
   for (let i = 0; i < 5; i++) {
+    let playerSelection = 'Choose'
     const computerSelection = getComputerChoice().toLowerCase()
-    const playerSelection = prompt(
-      'Enter Your choice [Rock, Paper, Scissor] : '
-    ).toLowerCase()
+    //Input Validation
+    while (
+      playerSelection !== 'rock' &&
+      playerSelection !== 'paper' &&
+      playerSelection !== 'scissor'
+    ) {
+      playerSelection = prompt(
+        'Enter Your choice [Rock, Paper, Scissor] : '
+      ).toLowerCase()
+      if (
+        playerSelection !== 'rock' &&
+        playerSelection !== 'paper' &&
+        playerSelection !== 'scissor'
+      )
+        console.log('Wrong Input')
+    }
+
     const gameResult = playRound(playerSelection, computerSelection)
+    // Points Calculation
     if (gameResult === 'player') playerPoints++
     else if (gameResult === 'computer') computerPoints++
     console.log(
       `Round ${
         i + 1
-      } : Player Move ${playerSelection}| Points : ${playerPoints} || Computer Move ${computerSelection} | Points : ${computerPoints}`
+      } : Player Move : ${playerSelection.toUpperCase()} | Points : ${playerPoints} || Computer Move : ${computerSelection.toUpperCase()} | Points : ${computerPoints}`
     )
   }
+  // Results Checking
   if (computerPoints === playerPoints) console.log('RESULTS : DRAWWWWW')
   else if (playerPoints > computerPoints)
     console.log('RESULTS: CONGRATULATIONS!!! YOU WIN!')
   else console.log('RESULTS: YOU LOOSE! BETTER LUCK NEXT TIME!')
 }
 
-// Game Calling
+// Main Function Call
 game()
